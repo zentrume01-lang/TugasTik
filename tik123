@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatika Kelas 9C - Ika Yulianto, S.Kom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-light: #14b8a6;
+            --primary-dark: #0f766e;
+            --bg: #f8fafc;
+            --text: #334155;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --sidebar-width: 280px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            position: fixed;
+            height: 100vh;
+            padding: 30px 0;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 25px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo {
+            width: 45px;
+            height: 45px;
+            background-color: var(--white);
+            border-radius: 12px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            padding: 4px;
+        }
+
+        .sidebar-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        .sidebar h2 span {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .nav-links {
+            padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            color: rgba(255,255,255,0.85);
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a i {
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255,255,255,0.15);
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            flex: 1;
+            width: calc(100% - var(--sidebar-width));
+            max-width: 1200px;
+        }
+
+        .content-section {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* Sambutan Section */
+        .hero-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .hero-banner {
+            width: 100%;
+            height: 300px;
+            background-color: #e2e8f0;
+            position: relative;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-banner .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+
+        .hero-banner .overlay h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .hero-content {
+            padding: 30px;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .hero-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .hero-content .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Profil Section */
+        .profile-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        .profile-photo-container {
+            flex: 1;
+            min-width: 300px;
+            background-color: #f1f5f9;
+            position: relative;
+        }
+
+        .profile-photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 500px;
+            display: block;
+        }
+
+        .profile-details {
+            flex: 1.5;
+            padding: 40px;
+            min-width: 300px;
+        }
+
+        .profile-details h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+            display: inline-block;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .data-table td {
+            padding: 12px 0;
+            vertical-align: top;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .data-table td:first-child {
+            font-weight: 500;
+            width: 160px;
+            color: var(--text-light);
+        }
+
+        .data-table td:last-child {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .edu-list {
+            list-style: none;
+        }
+
+        .edu-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .edu-list li::before {
+            content: '\f19d'; /* FontAwesome graduation-cap */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--primary-light);
+            font-size: 0.85rem;
+        }
+
+        /* Pengalaman Section */
+        .exp-intro {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .exp-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #f1f5f9;
+        }
+
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-light);
+            transition: 0.3s;
+        }
+
+        .exp-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .exp-card:hover::before {
+            background: var(--primary);
+            height: 6px;
+        }
+
+        .exp-icon {
+            width: 50px;
+            height: 50px;
+            background: #f0fdf4;
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .exp-card h3 {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .exp-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-left: var(--sidebar-width);
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .sidebar { width: 100%; height: auto; position: relative; padding: 15px; }
+            .sidebar-header { padding: 0 0 15px 0; justify-content: center; margin-bottom: 15px; }
+            .nav-links { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .nav-links a { padding: 10px 15px; font-size: 0.85rem; }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            footer { margin-left: 0; }
+            .profile-photo-container img { min-height: 350px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Tut_Wuri_Handayani_logo.png" alt="Logo">
+            </div>
+            <h2>Informatika 9C <span>SMPN 2 Toroh</span></h2>
+        </div>
+        <div class="nav-links">
+            <a href="#home" class="active" onclick="showSection('home', this)">
+                <i class="fas fa-home"></i> Sambutan
+            </a>
+            <a href="#profil" onclick="showSection('profil', this)">
+                <i class="fas fa-user-tie"></i> Profil Guru
+            </a>
+            <a href="#pengalaman" onclick="showSection('pengalaman', this)">
+                <i class="fas fa-laptop-code"></i> Pengalaman Belajar
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Section Home / Sambutan -->
+        <section id="home" class="content-section" style="display: block;">
+            <h1 class="section-title">Sambutan Hangat</h1>
+            <p class="section-subtitle">Pesan dari Guru Informatika untuk siswa-siswi Kelas 9C</p>
+            
+            <div class="hero-card">
+                <div class="hero-banner">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1200&auto=format&fit=crop" alt="Banner Sambutan">
+                    <div class="overlay">
+                        <h3>Selamat Datang di Kelas Digital!</h3>
+                        <p>Bersama Ika Yulianto, S.Kom</p>
+                    </div>
+                </div>
+                <div class="hero-content">
+                    <p><i>Assalamualaikum Warahmatullahi Wabarakatuh,</i></p>
+                    <p>Halo anak-anakku, para murid hebat <b>Kelas 9C</b>! Bagaimana kabarnya hari ini? Semoga kita semua selalu diberikan kesehatan dan semangat untuk terus belajar hal baru.</p>
+                    <p>Selamat datang di petualangan baru di dunia <span class="highlight">Informatika</span>. Zaman sekarang, komputer dan HP bukan cuma buat main game atau sosmed. Alat-alat ini adalah senjata kalian untuk menciptakan masa depan.</p>
+                    <p>Di kelas ini, Bapak ingin kita semua keluar dari zona nyaman. Jangan takut kalau kalian belum ngerti apa-apa soal koding atau komputer. Kita akan mulai dari nol bersama-sama. <b>Yang paling penting bukanlah seberapa pintar kalian sekarang, tapi seberapa besar rasa ingin tahu dan keberanian kalian untuk mencoba.</b></p>
+                    <p>Ingat, teknologi itu seperti pisau. Kalau dipakai untuk memotong sayur, jadi masakan enak. Kalau dipakai untuk hal buruk, jadi masalah. Karena itu, selain belajar teknisnya, kita juga akan belajar <span class="highlight">etika dan keamanan digital</span>, supaya kalian jadi pengguna internet yang cerdas dan bijak.</p>
+                    <p>Mari kita jadikan kelas ini tempat yang seru untuk bereksperimen, bertanya, dan berkarya. Jangan malu buat salah, karena dari kesalahan itulah kita belajar. Siap untuk jadi generasi digital yang keren, Kelas 9C?</p>
+                    <p><i>Wassalamualaikum Warahmatullahi Wabarakatuh.</i></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Profil -->
+        <section id="profil" class="content-section" style="display: none;">
+            <h1 class="section-title">Profil Pendidik</h1>
+            <p class="section-subtitle">Mengenal lebih dekat guru Informatika Kelas 9C</p>
+            
+            <div class="profile-card">
+                <div class="profile-photo-container">
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop" alt="Foto Ika Yulianto">
+                </div>
+                <div class="profile-details">
+                    <h3>Informasi Pribadi</h3>
+                    <table class="data-table">
+                        <tr>
+                            <td>Nama Lengkap</td>
+                            <td>Ika Yulianto, S.Kom</td>
+                        </tr>
+                        <tr>
+                            <td>Zodiak</td>
+                            <td>Cancer</td>
+                        </tr>
+                        <tr>
+                            <td>Tempat Tanggal Lahir</td>
+                            <td>Grobogan, 18 Juli 1989</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>Menikah</td>
+                        </tr>
+                        <tr>
+                            <td>Istri</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Anak</td>
+                            <td>2</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Pendidikan Formal</h3>
+                    <ul class="edu-list">
+                        <li>SD Negeri 2 Sugihan (2001)</li>
+                        <li>SMP Negeri 2 Toroh (2004)</li>
+                        <li>SMA Muhammadiyah Purodadi (2007)</li>
+                        <li>D3 Universitas Dian Nuswantoro - UDINUS (2010)</li>
+                        <li>S1 STMIK Himsya Semarang (2013)</li>
+                        <li>PPG Universitas Pendidikan Indonesia - UPI (2024)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Pengalaman Belajar -->
+        <section id="pengalaman" class="content-section" style="display: none;">
+            <h1 class="section-title">Pengalaman Belajar</h1>
+            <p class="section-subtitle">Apa saja yang akan dipelajari di kelas Informatika 9C?</p>
+            
+            <div class="exp-intro">
+                <p>Selama menempuh mata pelajaran Informatika, siswa tidak hanya dituntut untuk memahami teori, tetapi juga berfokus pada praktik nyata dan pemecahan masalah (<i>Computational Thinking</i>). Berikut adalah peta perjalanan belajar yang akan dilalui siswa-siswi Kelas 9C:</p>
+            </div>
+
+            <div class="exp-grid">
+                <div class="exp-card">
+                    <div class="exp-icon"><i class="fas fa-brain"></i></div>
+                    <h3>1. Berpikir Komputasional</h3>
+                    <p>Melatih cara berpikir kritis dan sistematis dalam memecahkan masalah sehari-hari menggunakan konsep algoritma, dekomposisi, dan abstraksi.</p>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-icon"><i class="fas fa-code"></i></div>
+                    <h3>2. Pemrograman Dasar</h3>
+                    <p>Praktik langsung menulis kode menggunakan bahasa pemrograman visual (Scratch) atau teks dasar (Python/JS) untuk membuat program interaktif.</p>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3>3. Analisis Data</h3>
+                    <p>Belajar mengumpulkan, mengolah, dan memvisualisasikan data menggunakan aplikasi spreadsheet. Siswa akan membuat grafik dari data nyata.</p>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>4. Jaringan & Internet</h3>
+                    <p>Memahami cara kerja internet, alamat IP, serta bagaimana perangkat di seluruh dunia bisa saling terhubung untuk bertukar informasi.</p>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>5. Keamanan Siber</h3>
+                    <p>Mempelajari pentingnya menjaga kata sandi, mengenali penipuan online (phishing), serta beretika baik di media sosial.</p>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>6. Proyek Kolaborasi</h3>
+                    <p>Puncak pembelajaran adalah membuat proyek berkelompok untuk menciptakan solusi digital (aplikasi/web) dari masalah nyata di sekolah.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2024 Informatika Kelas 9C - SMP Negeri 2 Toroh.
+    </footer>
+
+    <!-- JavaScript untuk Navigasi -->
+    <script>
+        function showSection(sectionId, element) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
+            element.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
